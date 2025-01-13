@@ -10,6 +10,7 @@ def run():
     intents.members = True
     bot = commands.Bot(command_prefix= "!", intents=intents)
 
+    q_list = []
     
     # bot console log
     @bot.event
@@ -31,6 +32,19 @@ def run():
     )
     async def ping(ctx):
         await ctx.send("pong")
+        
+    @bot.hybrid_command(
+        help = "submit a quote",
+        description = "type a quote and who said it" 
+    )
+    
+    async def quote(ctx, speaker, quote):
+        await ctx.send( f"{ctx.author.name} submitted a quote: \n{quote}")
+        q_list.append(f"{ctx.author.name} | {speaker} | {quote}")
+        print("quote submitted")
+        print(f"current list:\n{q_list}")
+        
+        
         
     @bot.command(hidden=True)
     async def bokesync(ctx):
